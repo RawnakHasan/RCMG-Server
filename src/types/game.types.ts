@@ -4,11 +4,13 @@ export type Player = {
   username: string;
   host: boolean;
   hand: Card[];
-  cardCount: number;
 };
 
 export type Game = {
   players: Player[];
+  deck: Card[];
+  discardPile: Card[];
+  rotation: 1 | -1;
   gamePhase: "waiting" | "playing" | "finished";
   hostUsername: string;
 };

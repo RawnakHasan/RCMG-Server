@@ -14,16 +14,12 @@ export const handleStartGame = (socket: Socket, io: Server) => {
 
     game.gamePhase = "playing";
     game.players.forEach(
-      (player) => (
-        (player.hand = shuffledDeck.splice(0, 26)),
-        (player.cardCount = player.hand.length)
-      )
+      (player) => (player.hand = shuffledDeck.splice(0, 26))
     );
+    const topCard = shuffledDeck.pop()!;
+    game.discardPile = [topCard];
+    game.deck = shuffledDeck;
 
     io.to(roomId).emit("gameUpdate", game);
-
-    //DEBUG
-    console.log(games);
-    console.log(game);
   });
 };

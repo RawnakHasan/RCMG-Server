@@ -19,7 +19,6 @@ export const handleCreateGame = (socket: Socket) => {
       username,
       host: true,
       hand: [],
-      cardCount: 0,
     };
 
     socket.join(roomId);
@@ -27,6 +26,9 @@ export const handleCreateGame = (socket: Socket) => {
       players: [player],
       gamePhase: "waiting",
       hostUsername: username,
+      discardPile: [],
+      deck: [],
+      rotation: 1,
     });
     console.log(`${username} with ${socket.id} created a room with ${roomId}`);
     const game = games.get(roomId);

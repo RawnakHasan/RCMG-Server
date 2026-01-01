@@ -5,6 +5,8 @@ import { handleJoinGame } from "./socket/handleJoinGame.ts";
 import { handleUpdateGame } from "./socket/handleUpdateGame.ts";
 import { handleStartGame } from "./socket/handleStartGame.ts";
 import { handleGameChat } from "./socket/handleGameChat.ts";
+import { handlePlayCard } from "./socket/handlePlayCard.ts";
+import { handleGetCard } from "./socket/handleGetCard.ts";
 
 configDotenv();
 const PORT = Number(process.env.PORT);
@@ -24,6 +26,8 @@ io.on("connection", (socket) => {
   handleUpdateGame(socket, io);
   handleStartGame(socket, io);
   handleGameChat(socket, io);
+  handlePlayCard(socket, io);
+  handleGetCard(socket, io);
 });
 
 console.log("Socket.IO server listening on port ", PORT);

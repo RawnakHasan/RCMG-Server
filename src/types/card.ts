@@ -1,6 +1,7 @@
 export type CardColor = "Red" | "Blue" | "Green" | "Yellow";
 
 export type NormalCard = {
+  id: string;
   type: "Normal";
   name: 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9;
   color: CardColor;
@@ -8,6 +9,7 @@ export type NormalCard = {
 };
 
 export type ActionCard = {
+  id: string;
   type: "Action";
   name: "Draw 2" | "Draw 4" | "Reverse" | "Skip" | "Skip All" | "Discard All";
   color: CardColor;
@@ -15,6 +17,7 @@ export type ActionCard = {
 };
 
 export type WildCard = {
+  id: string;
   type: "Wild";
   name: "Draw 6" | "Draw 10" | "Color Roulette" | "Reverse Draw 4";
   chosenColor?: CardColor;

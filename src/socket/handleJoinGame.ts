@@ -15,7 +15,6 @@ export const handleJoinGame = (socket: Socket) => {
         username,
         host: false,
         hand: [],
-        cardCount: 0,
       };
 
       socket.join(roomId);
