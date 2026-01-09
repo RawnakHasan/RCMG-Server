@@ -1,7 +1,13 @@
 import type { Server, Socket } from "socket.io";
 import type { Card } from "../types/card";
 import { games } from "../game";
-import { handleCardEffect, isValidPlay } from "../lib/helpers";
+import { isValidPlay, playCard } from "../lib/CardHelpers";
+import {
+  getCardWithCardId,
+  getNextPlayer,
+  getPlayerWithUsername,
+  getTopCard,
+} from "../lib/GameHelpers";
 
 export const handlePlayCard = (socket: Socket, io: Server) => {
   socket.on(
@@ -21,21 +27,24 @@ export const handlePlayCard = (socket: Socket, io: Server) => {
         return;
       }
 
-      const player = game.players.find(
-        (player) => player.username === username
-      );
+      const player = getPlayerWithUsername(game, username);
       if (!player) {
         console.log(`Player ${username} not found`);
         return;
       }
 
-      const cardIndex = player.hand.findIndex((c) => c.id === card.id);
+      if (game.playerTurn !== player) {
+        console.log(`Not your turn Player with username ${username}`);
+        return;
+      }
+
+      const cardIndex = getCardWithCardId(player, card);
       if (cardIndex === -1) {
         console.log("Card not found in player's hand");
         return;
       }
 
-      const topCard = game.discardPile[0];
+      const topCard = getTopCard(game);
       if (!topCard) {
         console.log("No top card in discard pile");
         return;
@@ -44,24 +53,13 @@ export const handlePlayCard = (socket: Socket, io: Server) => {
 
       // Check if the card can be played
       const canPlay = isValidPlay(card, topCard);
-
       if (!canPlay) {
         console.log(`Invalid play: ${card.name} on ${topCard.name}`);
         return; // Don't remove card from hand, don't update game
       }
 
-      // Remove card from player's hand
-      const [playedCard] = player.hand.splice(cardIndex, 1);
-      if (!playedCard) {
-        console.log("Played Card Not found in the User Hand");
-        return;
-      }
-
-      // Add card to discard pile
-      game.discardPile.unshift(playedCard);
-
-      // Handle card effects (Draw 2, Reverse, Skip, etc.)
-      handleCardEffect(game, playedCard, username);
+      playCard(game, player, cardIndex);
+      game.playerTurn = getNextPlayer(game);
 
       // Emit updated game state
       io.to(roomId).emit("gameUpdate", game);

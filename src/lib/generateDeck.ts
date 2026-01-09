@@ -78,12 +78,14 @@ export const generateDeck = (): Card[] => {
       type: "Wild",
       name: "Color Roulette",
       image: `/Cards/Wild Color Roulette.svg`,
+      chosenColor: null,
     });
     Deck.push({
       id: nanoid(),
       type: "Wild",
       name: "Reverse Draw 4",
       image: `/Cards/Wild Reverse Draw 4.svg`,
+      chosenColor: null,
     });
   }
 
@@ -93,12 +95,14 @@ export const generateDeck = (): Card[] => {
       type: "Wild",
       name: "Draw 6",
       image: `/Cards/Wild Draw 6.svg`,
+      chosenColor: null,
     });
     Deck.push({
       id: nanoid(),
       type: "Wild",
       name: "Draw 10",
       image: `/Cards/Wild Draw 10.svg`,
+      chosenColor: null,
     });
   }
 

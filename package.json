@@ -3,7 +3,7 @@
   "module": "index.ts",
   "type": "module",
   "scripts": {
-    "dev": "nodemon --exec tsx src/server.ts",
+    "dev": "bun src/server.ts",
     "start": "bun run src/server.ts",
     "build": "echo 'No build step required'"
   },

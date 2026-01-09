@@ -20,7 +20,7 @@ export type WildCard = {
   id: string;
   type: "Wild";
   name: "Draw 6" | "Draw 10" | "Color Roulette" | "Reverse Draw 4";
-  chosenColor?: CardColor;
+  chosenColor: CardColor | null;
   image: string;
 };
 
